@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
+import { publicRoutes } from './routers'
+import Layout from './components/layouts/Layout'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="App">
+        <main>
+          <Routes>
+            {publicRoutes.map((route: any, index) => {
+              const LayoutClient = route.layout || Layout
+              const Page = route.component
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <LayoutClient>
+                      <Page />
+                    </LayoutClient>
+                  }
+                />
+              )
+            })}
+          </Routes>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
